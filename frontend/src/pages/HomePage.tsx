@@ -1,9 +1,15 @@
-import React from 'react'
+import Header from "../layouts/Header";
+import Sidebar from "../layouts/Sidebar";
 
 const HomePage = () => {
   return (
-    <div>HomePage</div>
-  )
-}
+    <div className="w-full h-screen flex flex-col">
+      <Header />
+      <div>
+        <Sidebar />
+      </div>
+    </div>
+  );
+};
 
-export default HomePage
+export default HomePage;
