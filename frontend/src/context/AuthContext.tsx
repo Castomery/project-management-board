@@ -24,7 +24,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Check if user is logged in on mount
     const token = localStorage.getItem('authToken');
     const userData = localStorage.getItem('userData');
     
@@ -36,7 +35,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const login = async (email: string, password: string) => {
     try {
-      // Replace with your actual API call
+
       const response = await fetch('/api/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -60,7 +59,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const signup = async (name: string, email: string, password: string) => {
     try {
-      // Replace with your actual API call
       const response = await fetch('/api/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
