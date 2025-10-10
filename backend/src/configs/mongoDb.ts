@@ -12,6 +12,6 @@ export const connectToDB = async() =>{
     });
 
     await mongoose.connect(MONGO_URI, {
-        dbName: "chat-app"
+        dbName: "pmBoardDB"
     });
 }
