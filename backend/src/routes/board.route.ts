@@ -8,6 +8,6 @@ boardRouter.use(authProtectRoute);
 
 boardRouter.get("/getboards", getBoards);
 boardRouter.post("/create", createNewBoard);
-boardRouter.post("/delete", deleteBoard);
+boardRouter.delete("/:id", deleteBoard);
 
 export default boardRouter;
