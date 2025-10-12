@@ -6,6 +6,7 @@ import { connectToDB } from "./configs/mongoDb";
 import { ENV } from "./configs/env";
 import authRouter from "./routes/auth.route";
 import boardRouter from "./routes/board.route";
+import listRouter from "./routes/list.route";
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use(express.json());
 
 app.use("/api/auth", authRouter);
 app.use("/api/boards", boardRouter)
+app.use("/api/lists", listRouter);
 
 
 app.get("/api/hello", (req, res) => {
