@@ -14,4 +14,4 @@ const BoardSchema: Schema<IBoard> = new Schema({
     members: [{type: mongoose.Schema.Types.ObjectId, ref:"User"}],
 }, {timestamps:true});
 
-export default mongoose.model<IBoard>("Board", BoardSchema);
+export const Board = mongoose.model<IBoard>("Board", BoardSchema);
