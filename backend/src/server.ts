@@ -7,6 +7,7 @@ import { ENV } from "./configs/env";
 import authRouter from "./routes/auth.route";
 import boardRouter from "./routes/board.route";
 import listRouter from "./routes/list.route";
+import cardRouter from "./routes/card.route";
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.use(express.json());
 app.use("/api/auth", authRouter);
 app.use("/api/boards", boardRouter)
 app.use("/api/lists", listRouter);
+app.use("/api/cards", cardRouter);
 
 
 app.get("/api/hello", (req, res) => {
@@ -29,7 +31,6 @@ app.get("/api/hello", (req, res) => {
 });
 
 app.listen(ENV.PORT, () => {
-    
     console.log("Server is runnign on port:", ENV.PORT);
 });
 

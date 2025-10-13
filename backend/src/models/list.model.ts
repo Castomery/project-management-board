@@ -12,4 +12,4 @@ const ListSchema : Schema<IList> = new Schema({
     position: {type: Number, default:0},
 }, { timestamps: true});
 
-export default mongoose.model<IList>("List", ListSchema);
+export const List = mongoose.model<IList>("List", ListSchema);

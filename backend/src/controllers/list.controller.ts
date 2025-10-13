@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import List from "../models/list.model";
-import Board from "../models/board.model";
+import {List} from "../models/list.model";
+import {Board} from "../models/board.model";
 import mongoose from "mongoose";
 
 interface ListRequest extends Request {
