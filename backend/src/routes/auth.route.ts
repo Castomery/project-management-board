@@ -4,9 +4,9 @@ import { authProtectRoute } from "../middleware/auth.middleware";
 
 const authRouter = express.Router();
 
-authRouter.post("/register", registerUser);
+authRouter.post("/signup", registerUser);
 authRouter.post("/login", loginUser);
 authRouter.post("/logout",logoutUser);
-authRouter.post("/check-auth", authProtectRoute, checkAuthUser);
+authRouter.get("/check-auth", authProtectRoute, checkAuthUser);
 
 export default authRouter;

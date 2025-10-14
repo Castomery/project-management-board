@@ -1,10 +1,11 @@
-import { createContext, useState, useEffect } from 'react';
-import type { ReactNode } from 'react';
+import { createContext, useState, useEffect } from "react";
+import type { ReactNode } from "react";
+import { axiosInstance } from "../configs/axios";
 
 export interface User {
   id: string;
-  email: string;
   name: string;
+  email: string;
 }
 
 export interface AuthContextType {
@@ -24,65 +25,44 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem('authToken');
-    const userData = localStorage.getItem('userData');
-    
-    if (token && userData) {
-      setUser(JSON.parse(userData));
-    }
-    setIsLoading(false);
+    const fetchUser = async () => {
+      try {
+        const res = await axiosInstance.get("/auth/check-auth");
+        setUser(res.data);
+      } catch {
+        setUser(null);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchUser();
   }, []);
 
   const login = async (email: string, password: string) => {
     try {
+      const response = await axiosInstance.post("/auth/login", { email, password });
 
-      const response = await fetch('/api/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = await response.json();
-      
-      if (response.ok) {
-        localStorage.setItem('authToken', data.token);
-        localStorage.setItem('userData', JSON.stringify(data.user));
-        setUser(data.user);
-      } else {
-        throw new Error(data.message || 'Login failed');
-      }
+      setUser(response.data);
     } catch (error) {
-      console.error('Login error:', error);
+      console.error("Login error:", error);
       throw error;
     }
   };
 
-  const signup = async (name: string, email: string, password: string) => {
+  const signup = async (username: string, email: string, password: string) => {
     try {
-      const response = await fetch('/api/signup', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, password }),
-      });
+      const response = await axiosInstance.post("/auth/signup", {username, email, password});
 
-      const data = await response.json();
+      setUser(response.data.user);
       
-      if (response.ok) {
-        localStorage.setItem('authToken', data.token);
-        localStorage.setItem('userData', JSON.stringify(data.user));
-        setUser(data.user);
-      } else {
-        throw new Error(data.message || 'Signup failed');
-      }
     } catch (error) {
-      console.error('Signup error:', error);
+      console.error("Signup error:", error);
       throw error;
     }
   };
 
-  const logout = () => {
-    localStorage.removeItem('authToken');
-    localStorage.removeItem('userData');
+  const logout = async () => {
+    await axiosInstance.post("/auth/logout");
     setUser(null);
   };
 

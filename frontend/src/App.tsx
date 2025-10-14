@@ -5,6 +5,7 @@ import ProtectedRoute from './routes/ProtectedRoute'
 import PublicRoute from './routes/PublicRoute'
 
 const App = () => {
+
   return (
     <div>
       <Routes>

@@ -1,6 +1,16 @@
-import { Bell, Plus, Search, Trello, User } from "lucide-react";
+import { Bell, Plus, Search, Trello, User, LogOut} from "lucide-react";
+import { useState } from "react";
+import { useAuth } from "../hooks/useAuth";
 
 const Header = () => {
+
+  const [menuOpen, setMenuOpen] = useState(false);
+  const {logout} = useAuth();
+
+  const handleLogout = () => {
+    logout();
+  };
+
   return (
     <header className="bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-md">
       <div className="flex items-center justify-between px-4 py-3 gap-4">
@@ -35,9 +45,26 @@ const Header = () => {
             <Bell size={20} />
           </button>
           
-          <button className="w-8 h-8 bg-blue-800 hover:bg-blue-900 rounded-full flex items-center justify-center transition-colors">
-            <User size={18} />
-          </button>
+           <div className="relative">
+            <button
+              onClick={() => setMenuOpen((prev) => !prev)}
+              className="w-8 h-8 bg-blue-800 hover:bg-blue-900 rounded-full flex items-center justify-center transition-colors"
+            >
+              <User size={18} />
+            </button>
+
+            {menuOpen && (
+              <div className="absolute right-0 mt-2 w-40 bg-white text-gray-800 rounded shadow-lg overflow-hidden z-50">
+                <button
+                  onClick={handleLogout}
+                  className="flex items-center gap-2 w-full px-4 py-2 text-left hover:bg-gray-100 transition"
+                >
+                  <LogOut size={16} />
+                  Logout
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </header>

@@ -1,10 +1,12 @@
 import jwt from "jsonwebtoken";
 import User from "../models/user.model";
 import { ENV } from "../configs/env";
-import type { Request, Response } from "express";
+import type { Response } from "express";
+import { AuthRequest } from "../controllers/auth.controller";
 
 
-export const authProtectRoute = async (req: Request, res: Response, next: Function) => {
+
+export const authProtectRoute = async (req: AuthRequest, res: Response, next: Function) => {
 
     try {
         const token = req.cookies.token;
@@ -26,7 +28,7 @@ export const authProtectRoute = async (req: Request, res: Response, next: Functi
 
         if (!user) res.status(404).json({ message: "User not found" });
 
-        (req as any).user = user;
+        req.user = user;
 
         next()
 

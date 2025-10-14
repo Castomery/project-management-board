@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Mail, Lock, User, Eye, EyeOff } from 'lucide-react';
+import { useAuth } from '../hooks/useAuth';
 
 interface FormData {
   name: string;
@@ -8,6 +9,9 @@ interface FormData {
 }
 
 const AuthPage = () => {
+
+  const {login, signup} = useAuth();
+
   const [isLogin, setIsLogin] = useState<boolean>(true);
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [formData, setFormData] = useState<FormData>({
@@ -17,8 +21,11 @@ const AuthPage = () => {
   });
 
   const handleSubmit = (): void => {
-    console.log('Form submitted:', formData);
-    // Add your authentication logic here
+    if(isLogin){
+      login(formData.email, formData.password);
+    }else{
+      signup(formData.name, formData.email, formData.password);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -144,13 +151,6 @@ const AuthPage = () => {
 
             {isLogin && (
               <div className="flex items-center justify-between">
-                <label className="flex items-center">
-                  <input
-                    type="checkbox"
-                    className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                  />
-                  <span className="ml-2 text-sm text-gray-600">Remember me</span>
-                </label>
                 <button className="text-sm text-blue-600 hover:text-blue-700 font-medium">
                   Forgot password?
                 </button>

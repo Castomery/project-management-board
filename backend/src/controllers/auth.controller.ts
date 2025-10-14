@@ -3,6 +3,10 @@ import bcrypt from "bcryptjs";
 import User, { IUser } from "../models/user.model";
 import generateToken from "../utils/generateToken";
 
+export interface AuthRequest extends Request {
+  user?: typeof User.prototype;
+}
+
 export const registerUser = async (req: Request, res: Response): Promise<void> => {
   try {
     const { username, email, password } = req.body;
@@ -15,7 +19,10 @@ export const registerUser = async (req: Request, res: Response): Promise<void> =
 
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser: IUser = new User({ username, email, password: hashedPassword });
-    await newUser.save();
+    
+    const user = await newUser.save();
+
+    const token = generateToken(user._id.toString(), res);
 
     res.status(201).json({
       message: "User registered successfully",
@@ -59,6 +66,6 @@ export const logoutUser = async (_: Request, res: Response) => {
     res.status(200).json({ message: 'Logged out successfully' });
 };
 
-export const checkAuthUser = async(req: Request, res: Response) => {
-    res.status(200).json((req as any).user);
+export const checkAuthUser = async(req: AuthRequest, res: Response) => {
+    res.status(200).json((req.user));
 }
