@@ -1,9 +1,10 @@
 
-import type { Board } from "../types/types";
+import type { Board as BoardType } from "../types/types";
+import Board from "./Board";
 import BoardHeader from "./BoardHeader";
 
 interface MainWorkSpaceProps {
-  board?: Board | null;
+  board?: BoardType | null;
 }
 
 const MainWorkSpace = ({ board }: MainWorkSpaceProps) => {
@@ -19,9 +20,8 @@ const MainWorkSpace = ({ board }: MainWorkSpaceProps) => {
      <div className="flex-1 overflow-x-auto">
       <BoardHeader title={board.title}/>
     
-      <div>
-      {/* TODO: RENDER LISTS AND CARDS */}
-
+      <div className="h-screen">
+          <Board board={board}/>
       </div>
     </div>
   );
