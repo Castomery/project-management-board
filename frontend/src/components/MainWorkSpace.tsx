@@ -1,5 +1,6 @@
 
 import type { Board } from "../types/types";
+import BoardHeader from "./BoardHeader";
 
 interface MainWorkSpaceProps {
   board?: Board | null;
@@ -15,9 +16,13 @@ const MainWorkSpace = ({ board }: MainWorkSpaceProps) => {
   }
 
   return (
-     <div className="flex-1 p-4 overflow-x-auto">
-      <h2 className="text-2xl font-bold mb-4">{board.title}</h2>
+     <div className="flex-1 overflow-x-auto">
+      <BoardHeader title={board.title}/>
+    
+      <div>
       {/* TODO: RENDER LISTS AND CARDS */}
+
+      </div>
     </div>
   );
 };
