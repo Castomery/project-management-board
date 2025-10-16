@@ -21,8 +21,9 @@ export const createNewBoard = async (req: BoardRequest, res: Response) => {
       lists: [],
     });
 
-    await newBoard.save();
-    res.status(201).json(newBoard);
+    const board = await newBoard.save();
+    res.status(201).json(board);
+
   } catch (error: any) {
     res.status(500).json({ error: error.message });
   }

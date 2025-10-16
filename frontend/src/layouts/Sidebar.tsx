@@ -13,14 +13,17 @@ interface SidebarProps {
   boards: Board[];
   selectedBoardId?: string;
   onSelectBoard: (board: Board) => void;
+  onOpenCreateBoard: () => void;
 }
 
-const Sidebar = ({ boards, selectedBoardId, onSelectBoard }: SidebarProps) => {
+const Sidebar = ({ boards, selectedBoardId, onSelectBoard, onOpenCreateBoard }: SidebarProps) => {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+
 
   const toggleDropdown = (boardId: string) => {
     setOpenDropdown(openDropdown === boardId ? null : boardId);
   };
+
 
   return (
     <aside className="w-64 bg-gray-50 border-r border-gray-200 p-4 h-screen">
@@ -31,7 +34,9 @@ const Sidebar = ({ boards, selectedBoardId, onSelectBoard }: SidebarProps) => {
       <hr className="border-gray-300 my-3" />
 
       <div>
-        <button className="w-full flex items-center justify-center gap-0.5 bg-blue-600 text-white font-bold text-xl rounded p-3">
+        <button 
+        onClick={onOpenCreateBoard}
+        className="w-full flex items-center justify-center gap-0.5 bg-blue-600 text-white font-bold text-xl rounded p-3 hover:bg-blue-500">
           <PlusIcon className="size-4" />
           <span>Create new board</span>
         </button>
@@ -41,15 +46,15 @@ const Sidebar = ({ boards, selectedBoardId, onSelectBoard }: SidebarProps) => {
 
       <div className="space-y-1">
         {boards.map((board) => (
-          <div key={board.id}>
+          <div key={board._id}>
             <div className="flex justify-between items-center">
               <button
                 onClick={() => {
-                  toggleDropdown(board.id);
+                  toggleDropdown(board._id);
                   onSelectBoard(board);
                 }}
                 className={`w-full flex items-center justify-between px-3 py-2 rounded hover:bg-gray-100 transition-colors text-left ${
-                  selectedBoardId === board.id
+                  selectedBoardId === board._id
                     ? "bg-blue-100 font-semibold"
                     : "bg-white"
                 }`}
@@ -57,7 +62,7 @@ const Sidebar = ({ boards, selectedBoardId, onSelectBoard }: SidebarProps) => {
                 {" "}
                 <LayoutDashboard size={16} className="text-gray-600" />{" "}
                 <span className="font-medium text-gray-700">{board.title}</span>{" "}
-                {openDropdown === board.id ? (
+                {openDropdown === board._id ? (
                   <ChevronDown size={18} className="text-gray-500" />
                 ) : (
                   <ChevronRight size={18} className="text-gray-500" />
@@ -65,7 +70,7 @@ const Sidebar = ({ boards, selectedBoardId, onSelectBoard }: SidebarProps) => {
               </button>
             </div>
 
-            {openDropdown === board.id && (
+            {openDropdown === board._id && (
               <div className="mt-1 bg-white border border-gray-200 rounded shadow-sm">
                 <button className="w-full flex items-center gap-3 px-4 py-2 hover:bg-gray-100 transition-colors text-left">
                   <Users size={16} className="text-gray-600" />
